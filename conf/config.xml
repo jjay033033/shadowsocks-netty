@@ -3,16 +3,16 @@
 	<local_port>1080</local_port>
 	<remotes>
 		<remote>
-			<ip_addr>xxxxxx</ip_addr>
-			<port>443</port>
+			<ip_addr>c.isxc.bid</ip_addr>
+			<port>16129</port>
 			<method>aes-256-cfb</method>
-			<password>xxxx</password>
+			<password>65023509</password>
 		</remote>
-		<remote>
+		<!-- <remote>
 			<ip_addr>xxxxx</ip_addr>
 			<port>443</port>
 			<method>aes-256-cfb</method>
 			<password>xxx</password>
-		</remote>
+		</remote> -->
 	</remotes>
 </config>

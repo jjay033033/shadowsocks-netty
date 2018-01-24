@@ -7,6 +7,7 @@ import java.util.Map;
 import org.netty.encryption.impl.AesCrypt;
 import org.netty.encryption.impl.BlowFishCrypt;
 import org.netty.encryption.impl.CamelliaCrypt;
+import org.netty.encryption.impl.Rc4Crypt;
 import org.netty.encryption.impl.SeedCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ public class CryptFactory {
 		crypts.putAll(CamelliaCrypt.getCiphers());
 		crypts.putAll(BlowFishCrypt.getCiphers());
 		crypts.putAll(SeedCrypt.getCiphers());
+		crypts.putAll(Rc4Crypt.getCiphers());
 	}
 
 	public static ICrypt get(String name, String password) {

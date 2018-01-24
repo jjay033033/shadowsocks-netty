@@ -45,6 +45,7 @@ public final class SocksServerConnectHandler extends SimpleChannelInboundHandler
 		this._crypt = CryptFactory.get(remoteServer.get_method(), remoteServer.get_password());
 	}
 
+	//pc发请求过来ss
 	@Override
 	public void channelRead0(final ChannelHandlerContext ctx, final SocksCmdRequest request) throws Exception {
 		Promise<Channel> promise = ctx.executor().newPromise();

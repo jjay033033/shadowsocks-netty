@@ -2,5 +2,10 @@
 
 /logs
 /.settings
+<<<<<<< HEAD
 /.classpath
 /.project
+=======
+/.classpath
+/.project
+>>>>>>> branch 'master' of https://github.com/jjay033033/shadowsocks-netty.git

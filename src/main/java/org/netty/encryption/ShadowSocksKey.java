@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 
 import javax.crypto.SecretKey;
 
+import org.netty.util.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,6 @@ public class ShadowSocksKey implements SecretKey {
 	}
 
 	private byte[] init(String password) {
-		MessageDigest md = null;
 		byte[] keys = new byte[KEY_LENGTH];
 		byte[] temp = null;
 		byte[] hash = null;
@@ -38,23 +38,19 @@ public class ShadowSocksKey implements SecretKey {
 		int i = 0;
 
 		try {
-			md = MessageDigest.getInstance("MD5");
 			passwordBytes = password.getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			logger.error("ShadowSocksKey: Unsupported string encoding", e);
-		} catch (Exception e) {
-			logger.error("init error", e);
-			return null;
 		}
 
 		while (i < keys.length) {
 			if (i == 0) {
-				hash = md.digest(passwordBytes);
+				hash = CommonUtil.md5Digest(passwordBytes);
 				temp = new byte[passwordBytes.length + hash.length];
 			} else {
 				System.arraycopy(hash, 0, temp, 0, hash.length);
 				System.arraycopy(passwordBytes, 0, temp, hash.length, passwordBytes.length);
-				hash = md.digest(temp);
+				hash = CommonUtil.md5Digest(temp);
 			}
 			System.arraycopy(hash, 0, keys, i, hash.length);
 			i += hash.length;

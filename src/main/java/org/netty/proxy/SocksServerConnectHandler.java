@@ -201,6 +201,7 @@ public final class SocksServerConnectHandler extends SimpleChannelInboundHandler
 		try {
 			_remoteOutStream = new ByteArrayOutputStream();
 			if (isProxy) {
+				logger.debug(new String(data, "UTF-8"));
 				_crypt.encrypt(data, length, _remoteOutStream);
 				data = _remoteOutStream.toByteArray();
 			}
@@ -232,6 +233,7 @@ public final class SocksServerConnectHandler extends SimpleChannelInboundHandler
 			if (isProxy) {
 				_crypt.decrypt(data, length, _localOutStream);
 				data = _localOutStream.toByteArray();
+				logger.debug(new String(data, "UTF-8"));
 			}
 			channel.writeAndFlush(Unpooled.wrappedBuffer(data));
 		} catch (Exception e) {

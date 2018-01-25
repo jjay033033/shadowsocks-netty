@@ -7,6 +7,7 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
 import org.netty.config.Config;
+import org.netty.config.ConfigLoader;
 import org.netty.config.ConfigXmlLoader;
 import org.netty.config.PacLoader;
 import org.netty.manager.RemoteServerManager;
@@ -21,12 +22,13 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.traffic.GlobalTrafficShapingHandler;
 import io.netty.handler.traffic.TrafficCounter;
+import priv.lmoon.shadowsupdate.config.XmlConfig;
 
 public class SocksServer {
 
 	private static Logger logger = LoggerFactory.getLogger(SocksServer.class);
 
-	private static final String CONFIG = "conf/config.xml";
+//	private static final String CONFIG = "conf/config.xml";
 
 	private static final String PAC = "conf/pac.xml";
 
@@ -47,9 +49,11 @@ public class SocksServer {
 
 	public void start() {
 		try {
-			Config config = ConfigXmlLoader.load(CONFIG);
+			
+//			Config config = ConfigXmlLoader.load(CONFIG);			
+//			RemoteServerManager.init(config);
+			int localPort = ConfigLoader.getInstance().getLocalPort();
 			PacLoader.load(PAC);
-			RemoteServerManager.init(config);
 
 			bossGroup = new NioEventLoopGroup(1);
 			workerGroup = new NioEventLoopGroup();
@@ -58,10 +62,10 @@ public class SocksServer {
 
 			bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
 					.childHandler(new SocksServerInitializer(trafficHandler));
-
-			logger.info("Start At Port " + config.get_localPort());
+			
+			logger.info("Start At Port " + localPort);
 			startMBean();
-			bootstrap.bind(config.get_localPort()).sync().channel().closeFuture().sync();
+			bootstrap.bind(localPort).sync().channel().closeFuture().sync();
 		} catch (Exception e) {
 			logger.error("start error", e);
 		} finally {

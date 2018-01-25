@@ -29,9 +29,8 @@ public class RemoteServerManager {
 
 	private static Config config;
 	private static Random random = new Random();
-
-	public static void init(Config config) {
-		RemoteServerManager.config = config;
+	
+	static{
 		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
 
 			@Override
@@ -43,6 +42,10 @@ public class RemoteServerManager {
 				}
 			}
 		}, 0, 30, TimeUnit.SECONDS);
+	}
+
+	public static void init(Config config) {
+		RemoteServerManager.config = config;		
 	}
 
 	/**
@@ -69,7 +72,13 @@ public class RemoteServerManager {
 	 * 检测远程服务器是否可以连接
 	 */
 	private static void checkStatus() {
+		if(config==null){
+			return;
+		}
 		List<RemoteServer> remoteList = config.getRemoteList();
+		if(remoteList==null){
+			return;
+		}
 		for (RemoteServer remoteServer : remoteList) {
 			if (isConnected(remoteServer)) {
 				remoteServer.setStatus(AVAILABLE);

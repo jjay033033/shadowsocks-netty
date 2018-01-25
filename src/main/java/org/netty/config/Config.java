@@ -22,6 +22,10 @@ public class Config {
 		remoteList.add(remoteConfig);
 	}
 
+	public void setRemoteList(List<RemoteServer> remoteList) {
+		this.remoteList = remoteList;
+	}
+
 	public List<RemoteServer> getRemoteList() {
 		return remoteList;
 	}

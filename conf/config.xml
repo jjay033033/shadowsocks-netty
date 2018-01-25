@@ -1,18 +1,67 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<config>
-	<local_port>10800</local_port>
-	<remotes>
-		<!-- <remote>
-			<ip_addr>c.isxc.bid</ip_addr>
-			<port>15839</port>
-			<method>aes-256-cfb</method>
-			<password>03884453</password>
-		</remote> -->
-		<remote>
-			<ip_addr>rua.ss8.site</ip_addr>
-			<port>18622</port>
-			<method>rc4-md5</method>
-			<password>70790127</password>
-		</remote>
-	</remotes>
-</config>
+<?xml version="1.0" encoding="utf-8"?>
+<configs>
+
+	<localPort>10800</localPort>
+
+	<sleepTime>300</sleepTime>
+
+	<servers>
+		<server>
+			<id>ishadowsocks</id>
+			<url>https://global.ishadowx.net/</url>
+			<begin>id=&quot;portfolio&quot;</begin>
+			<end>id=&quot;footer&quot;</end>
+			<type>0</type>
+			<serverIpBegin>IP Address:&lt;span[^&gt;]*&gt;</serverIpBegin>
+			<serverIpEnd>&lt;</serverIpEnd>
+			<serverPortBegin>Port:&lt;span[^&gt;]*&gt;</serverPortBegin>
+			<serverPortEnd>&lt;</serverPortEnd>
+			<passwordBegin>Password:&lt;span[^&gt;]*&gt;</passwordBegin>
+			<passwordEnd>&lt;</passwordEnd>
+			<encryptionBegin>Method:</encryptionBegin>
+			<encryptionEnd>&lt;</encryptionEnd>
+		</server>
+		<server>
+			<id>shadowsocks8</id>
+			<url>https://en.ss8.fun/</url>
+			<begin>&lt;section id=&quot;free&quot;</begin>
+			<end>&lt;section id=&quot;sslist&quot;</end>
+			<type>1</type>
+			<picUrlBegin>href=&quot;</picUrlBegin>
+			<picUrlEnd>&quot;</picUrlEnd>
+			<severPicFlag>server</severPicFlag>
+		</server>
+		<!-- <server>
+			<id>freessr</id>
+			<url>https://freessr.xyz/</url>
+			<begin>免费shadowsocks账号</begin>
+			<end>SS免费分享站</end>
+			<type>0</type>
+			<serverIpBegin>服务器地址:</serverIpBegin>
+			<serverIpEnd>&lt;</serverIpEnd>
+			<serverPortBegin>端口:</serverPortBegin>
+			<serverPortEnd>&lt;</serverPortEnd>
+			<passwordBegin>密码:</passwordBegin>
+			<passwordEnd>&lt;</passwordEnd>
+			<encryptionBegin>加密方式:</encryptionBegin>
+			<encryptionEnd>&lt;</encryptionEnd>
+		</server> -->
+		<!-- <server>
+			<id>freevpnss</id>
+			<url>http://jn9.org/</url>
+			<begin>免费SS帐号</begin>
+			<end>商家推荐</end>
+			<type>0</type>
+			<serverIpBegin>服务器地址：</serverIpBegin>
+			<serverIpEnd>&lt;</serverIpEnd>
+			<serverPortBegin>端口：</serverPortBegin>
+			<serverPortEnd>&lt;</serverPortEnd>
+			<passwordBegin>码：</passwordBegin>
+			<passwordEnd>&lt;</passwordEnd>
+			<encryptionBegin>加密方式：</encryptionBegin>
+			<encryptionEnd>&lt;</encryptionEnd>
+		</server>-->
+	</servers>
+
+
+</configs>

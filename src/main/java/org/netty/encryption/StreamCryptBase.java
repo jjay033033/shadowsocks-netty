@@ -51,7 +51,7 @@ public abstract class StreamCryptBase implements ICrypt {
 				encCipher = getCipher(isEncrypt);
 				ParametersWithIV parameterIV = new ParametersWithIV(
 						new KeyParameter(_key.getEncoded()), _encryptIV);
-				encCipher.init(isEncrypt, parameterIV);
+				encCipher.init(isEncrypt, new KeyParameter(_key.getEncoded()));
 			} catch (InvalidAlgorithmParameterException e) {
 				logger.info(e.toString());
 			}
@@ -62,7 +62,7 @@ public abstract class StreamCryptBase implements ICrypt {
 				decCipher = getCipher(isEncrypt);
 				ParametersWithIV parameterIV = new ParametersWithIV(
 						new KeyParameter(_key.getEncoded()), _decryptIV);
-				decCipher.init(isEncrypt, parameterIV);
+				decCipher.init(isEncrypt, new KeyParameter(_key.getEncoded()));
 			} catch (InvalidAlgorithmParameterException e) {
 				logger.info(e.toString());
 			}

@@ -2,17 +2,17 @@
 <config>
 	<local_port>10800</local_port>
 	<remotes>
-		<remote>
+		<!-- <remote>
 			<ip_addr>c.isxc.bid</ip_addr>
 			<port>15839</port>
 			<method>aes-256-cfb</method>
 			<password>03884453</password>
-		</remote>
-		<!-- <remote>
+		</remote> -->
+		<remote>
 			<ip_addr>rua.ss8.site</ip_addr>
 			<port>18622</port>
 			<method>rc4-md5</method>
 			<password>70790127</password>
-		</remote>  -->
+		</remote>
 	</remotes>
 </config>

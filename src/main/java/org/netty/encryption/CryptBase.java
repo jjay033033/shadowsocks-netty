@@ -4,8 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.SecureRandom;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
@@ -19,18 +17,18 @@ import org.netty.util.CommonUtil;
 public abstract class CryptBase implements ICrypt {
 
 	protected final String _name;
-	protected final SecretKey _key;
+	private final SecretKey _key;
 	protected final ShadowSocksKey _ssKey;
-	protected final int _ivLength;
-	protected final int _keyLength;
-	protected boolean _encryptIVSet;
-	protected boolean _decryptIVSet;
+	private final int _ivLength;
+	private final int _keyLength;
+	private boolean _encryptIVSet;
+	private boolean _decryptIVSet;
 //	protected byte[] _encryptIV;
 //	protected byte[] _decryptIV;
-	protected final Lock encLock = new ReentrantLock();
-	protected final Lock decLock = new ReentrantLock();
-	protected StreamCipher enCipher;
-	protected StreamCipher deCipher;
+	private final Object encLock = new Object();
+	private final Object decLock = new Object();
+	private StreamCipher enCipher;
+	private StreamCipher deCipher;
 	private Logger logger = Logger.getLogger(CryptBase.class.getName());
 
 	public CryptBase(String name, String password) {

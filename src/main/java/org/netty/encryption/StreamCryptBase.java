@@ -13,6 +13,7 @@ import javax.crypto.SecretKey;
 import org.bouncycastle.crypto.StreamCipher;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
+import org.netty.util.CommonUtil;
 
 public abstract class StreamCryptBase implements ICrypt {
 
@@ -49,9 +50,9 @@ public abstract class StreamCryptBase implements ICrypt {
 			System.arraycopy(iv, 0, _encryptIV, 0, _ivLength);
 			try {
 				encCipher = getCipher(isEncrypt);
-				ParametersWithIV parameterIV = new ParametersWithIV(
-						new KeyParameter(_key.getEncoded()), _encryptIV);
-				encCipher.init(isEncrypt, new KeyParameter(_key.getEncoded()));
+//				ParametersWithIV parameterIV = new ParametersWithIV(
+//						new KeyParameter(_ssKey.getEncoded()), _encryptIV);
+				encCipher.init(isEncrypt, new KeyParameter(CommonUtil.md5Digest(CommonUtil.concat(_ssKey.getEncoded(), _encryptIV))));
 			} catch (InvalidAlgorithmParameterException e) {
 				logger.info(e.toString());
 			}
@@ -60,9 +61,9 @@ public abstract class StreamCryptBase implements ICrypt {
 			System.arraycopy(iv, 0, _decryptIV, 0, _ivLength);
 			try {
 				decCipher = getCipher(isEncrypt);
-				ParametersWithIV parameterIV = new ParametersWithIV(
-						new KeyParameter(_key.getEncoded()), _decryptIV);
-				decCipher.init(isEncrypt, new KeyParameter(_key.getEncoded()));
+//				ParametersWithIV parameterIV = new ParametersWithIV(
+//						new KeyParameter(_ssKey.getEncoded()), _decryptIV);
+				decCipher.init(isEncrypt, new KeyParameter(CommonUtil.md5Digest(CommonUtil.concat(_ssKey.getEncoded(), _decryptIV))));
 			} catch (InvalidAlgorithmParameterException e) {
 				logger.info(e.toString());
 			}

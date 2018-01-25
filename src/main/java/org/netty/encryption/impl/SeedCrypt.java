@@ -1,16 +1,17 @@
 package org.netty.encryption.impl;
 
-import org.bouncycastle.crypto.StreamBlockCipher;
-import org.bouncycastle.crypto.engines.SEEDEngine;
-import org.bouncycastle.crypto.modes.CFBBlockCipher;
-import org.netty.encryption.CryptBase;
-
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.ByteArrayOutputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.bouncycastle.crypto.StreamBlockCipher;
+import org.bouncycastle.crypto.StreamCipher;
+import org.bouncycastle.crypto.engines.SEEDEngine;
+import org.bouncycastle.crypto.modes.CFBBlockCipher;
+import org.netty.encryption.CryptBase;
 
 /**
  * Seed cipher implementation
@@ -36,7 +37,7 @@ public class SeedCrypt extends CryptBase {
     }
 
     @Override
-    protected StreamBlockCipher getCipher(boolean isEncrypted) throws InvalidAlgorithmParameterException {
+    protected StreamCipher getCipher(boolean isEncrypted) throws InvalidAlgorithmParameterException {
         SEEDEngine engine = new SEEDEngine();
         StreamBlockCipher cipher;
 
@@ -60,21 +61,21 @@ public class SeedCrypt extends CryptBase {
         return new SecretKeySpec(_ssKey.getEncoded(), "AES");
     }
 
-    @Override
-    protected void _encrypt(byte[] data, ByteArrayOutputStream stream) {
-        int noBytesProcessed;
-        byte[] buffer = new byte[data.length];
-
-        noBytesProcessed = encCipher.processBytes(data, 0, data.length, buffer, 0);
-        stream.write(buffer, 0, noBytesProcessed);
-    }
-
-    @Override
-    protected void _decrypt(byte[] data, ByteArrayOutputStream stream) {
-        int noBytesProcessed;
-        byte[] buffer = new byte[data.length];
-
-        noBytesProcessed = decCipher.processBytes(data, 0, data.length, buffer, 0);
-        stream.write(buffer, 0, noBytesProcessed);
-    }
+//    @Override
+//    protected void _encrypt(byte[] data, ByteArrayOutputStream stream) {
+//        int noBytesProcessed;
+//        byte[] buffer = new byte[data.length];
+//
+//        noBytesProcessed = cipher.processBytes(data, 0, data.length, buffer, 0);
+//        stream.write(buffer, 0, noBytesProcessed);
+//    }
+//
+//    @Override
+//    protected void _decrypt(byte[] data, ByteArrayOutputStream stream) {
+//        int noBytesProcessed;
+//        byte[] buffer = new byte[data.length];
+//
+//        noBytesProcessed = cipher.processBytes(data, 0, data.length, buffer, 0);
+//        stream.write(buffer, 0, noBytesProcessed);
+//    }
 }

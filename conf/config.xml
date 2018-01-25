@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <config>
-	<local_port>1080</local_port>
+	<local_port>10800</local_port>
 	<remotes>
 		<remote>
 			<ip_addr>c.isxc.bid</ip_addr>
-			<port>16129</port>
+			<port>15839</port>
 			<method>aes-256-cfb</method>
-			<password>65023509</password>
+			<password>03884453</password>
 		</remote>
 		<!-- <remote>
-			<ip_addr>xxxxx</ip_addr>
-			<port>443</port>
-			<method>aes-256-cfb</method>
-			<password>xxx</password>
-		</remote> -->
+			<ip_addr>rua.ss8.site</ip_addr>
+			<port>18622</port>
+			<method>rc4-md5</method>
+			<password>70790127</password>
+		</remote>  -->
 	</remotes>
 </config>

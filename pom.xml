@@ -4,7 +4,7 @@
 
 	<groupId>org.shadowsocks-netty</groupId>
 	<artifactId>shadowsocks-netty</artifactId>
-	<version>0.0.2</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>shadowsocks-netty</name>

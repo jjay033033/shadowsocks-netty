@@ -25,6 +25,8 @@ public class UrlContent {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UrlContent.class);
 	
+	private static final int CONNECT_TIME_OUT = 3000;
+	
 	public static String getURLContent(ServerConfigVO vo){
 		return getURLContent(vo.getUrl(), vo.getBegin(), vo.getEnd(),new UrlHandler() {
 			
@@ -102,7 +104,8 @@ public class UrlContent {
 	
 	private static void setConnectionProperties(HttpURLConnection conn){
 		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-		conn.setInstanceFollowRedirects(true);   
+		conn.setInstanceFollowRedirects(true);  		
+		conn.setConnectTimeout(CONNECT_TIME_OUT);
 //		connection.setRequestMethod("GET"); 
 	}
 

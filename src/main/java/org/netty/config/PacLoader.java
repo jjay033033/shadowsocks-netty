@@ -33,33 +33,51 @@ public class PacLoader {
 	private static boolean _global_mode;
 
 	/** 重加载的间隔时间 **/
-	private static int reloadTime = 5;
+	private static final long RELOAD_TIME = 30L;
 
 	private static long lastModify;
+	
+	private static String pacFilePath;
+	
+	private PacLoader(){}
+	
+	static{
+		start();
+	}
+	
+	public static void init(String pacFilePath){
+		PacLoader.pacFilePath = pacFilePath;
+	}
+	
+	private static void start(){
+		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
 
-	public static void load(final String filePath) throws Exception {
-		File file = new File(filePath);
+			@Override
+			public void run() {
+				try {
+					load();
+				} catch (Exception e) {
+					log.error("load pac error", e);
+				}
+			}
+		}, RELOAD_TIME, RELOAD_TIME, TimeUnit.SECONDS);
+	}
+
+	private static void load() throws Exception {
+		if(pacFilePath==null){
+			return;
+		}
+		File file = new File(pacFilePath);
 		if (!file.exists()) {
-			throw new RuntimeException("file = " + filePath + " is not exist!");
+			throw new RuntimeException("file = " + pacFilePath + " is not exist!");
 		}
 		if (file.lastModified() == lastModify) {
 			return;
 		}
 		lastModify = file.lastModified();
 
-		loadFile(filePath);
+		loadFile(pacFilePath);
 
-		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					load(filePath);
-				} catch (Exception e) {
-					log.error("load pac error", e);
-				}
-			}
-		}, reloadTime, reloadTime, TimeUnit.SECONDS);
 	}
 
 	private synchronized static void loadFile(String file) throws Exception {
@@ -136,7 +154,7 @@ public class PacLoader {
 		return _global_mode;
 	}
 
-	public static void set_global_mode(boolean _global_mode) {
+	private static void set_global_mode(boolean _global_mode) {
 		PacLoader._global_mode = _global_mode;
 	}
 

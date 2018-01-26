@@ -1,5 +1,7 @@
 package priv.lmoon.shadowsupdate.config;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,27 +13,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import priv.lmoon.shadowsupdate.SysConstants;
-import priv.lmoon.shadowsupdate.util.XmlMap;
+import priv.lmoon.shadowsupdate.util.XmlUtil;
 import priv.lmoon.shadowsupdate.vo.ServerConfigVO;
 
 public class XmlConfig {
 	
 	private static final Logger logger = LoggerFactory.getLogger(XmlConfig.class);
 	
-	private static XmlConfig xmlConfig;
+//	private static XmlConfig xmlConfig;
 	
-	private Map map;
+	private static Map map;
 	
-	private Map<String,ServerConfigVO> serverMap = new LinkedHashMap<String, ServerConfigVO>();
+	private static Map<String,ServerConfigVO> serverMap = new LinkedHashMap<String, ServerConfigVO>();
+	
+	private static String configPath;
 	
 	private XmlConfig(){
-		init();
+		
 	}
 	
-	private void init(){
+	public static void init(String configPath){
 		try {
-			XmlMap xm = new XmlMap(SysConstants.CONFIG_PATH);
-			map = xm.getConfigMap();
+			XmlConfig.configPath = configPath;
+//			XmlMap xm = new XmlMap(configPath);
+//			map = xm.getConfigMap();
+			FileInputStream fis = new FileInputStream(new File(configPath));
+			map = XmlUtil.toMap(fis);
 			if (map == null || map.isEmpty()) {
 				throw new FileNotFoundException();
 			}
@@ -44,7 +51,7 @@ public class XmlConfig {
 		
 	}
 	
-	private void initServerMap(){
+	private static void initServerMap(){
 		try {
 			Map servers = (Map) map.get("servers");
 			if (servers == null || servers.isEmpty()) {
@@ -89,7 +96,7 @@ public class XmlConfig {
 						vo.setPicUrlEnd((String) item.get("picUrlEnd"));
 						vo.setSeverPicFlag((String) item.get("severPicFlag"));
 					}
-					this.serverMap.put((String)item.get("id"), vo);
+					serverMap.put((String)item.get("id"), vo);
 				}
 			}
 			
@@ -100,15 +107,17 @@ public class XmlConfig {
 		}
 	}
 	
-	public static XmlConfig getInstance(){
-		if(xmlConfig == null){
-			xmlConfig = new XmlConfig();
-		}
-		return xmlConfig;
-	}
+//	public static XmlConfig getInstance(){
+//		if(xmlConfig == null){
+//			xmlConfig = new XmlConfig();
+//
+//		}
+//		return xmlConfig;
+//	}
 	
 	public static void resetInstance(){
-		xmlConfig = null;
+//		xmlConfig = null;
+		init(configPath);
 	}
 	
 //	public ServerConfigVo getServerConfigVo(String id){
@@ -123,7 +132,7 @@ public class XmlConfig {
 	 * 整个xml文件的map
 	 * @return
 	 */
-	public Map getMap(){
+	public static Map getMap(){
 		return map;
 	}
 	
@@ -132,7 +141,7 @@ public class XmlConfig {
 	 * @param key
 	 * @return
 	 */
-	public String getValue(String key){
+	public static String getValue(String key){
 		if(map!=null){
 			return (String) map.get(key);
 		}
@@ -143,7 +152,7 @@ public class XmlConfig {
 	 * 服务器配置（servers标签下）的map
 	 * @return
 	 */
-	public Map<String, ServerConfigVO> getServerConfigMap(){
+	public static Map<String, ServerConfigVO> getServerConfigMap(){
 		return serverMap;
 	}
 

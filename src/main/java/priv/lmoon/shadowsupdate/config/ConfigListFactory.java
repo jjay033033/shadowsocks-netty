@@ -11,16 +11,16 @@ public class ConfigListFactory {
 	
 	private static Map<String,ConfigList> configMap = new HashMap<String, ConfigList>();
 	
-	private static ConfigListFactory configListFactory;
+//	private static ConfigListFactory configListFactory;
 	
 	private static ConfigList firstConfigList;
 	
 	private ConfigListFactory(){
-		init();
+		
 	}
 	
-	private void init(){
-		Map<String,ServerConfigVO> map = XmlConfig.getInstance().getServerConfigMap();
+	public static void init(){
+		Map<String,ServerConfigVO> map = XmlConfig.getServerConfigMap();
 		int i = 0;
 		for(Iterator<String> it = map.keySet().iterator();it.hasNext();){
 			String key = it.next();
@@ -42,22 +42,15 @@ public class ConfigListFactory {
 		}
 	}
 	
-	public static ConfigListFactory getInstance(){
-		if(configListFactory == null){
-			configListFactory = new ConfigListFactory();
-		}
-		return configListFactory;
-	}
-	
-	public ConfigList getConfigListObj(String id){
+	public static ConfigList getConfigListObj(String id){
 		return configMap.get(id);
 	}
 	
-	public ConfigList getFirstConfigList(){
+	public static ConfigList getFirstConfigList(){
 		return firstConfigList;
 	}
 	
-	public Map<String,ConfigList> getConfigListMap(){
+	public static Map<String,ConfigList> getConfigListMap(){
 		return configMap;
 	}
 

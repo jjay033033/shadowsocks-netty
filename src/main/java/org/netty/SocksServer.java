@@ -6,11 +6,8 @@ import java.util.concurrent.Executors;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
-import org.netty.config.Config;
 import org.netty.config.ConfigLoader;
-import org.netty.config.ConfigXmlLoader;
 import org.netty.config.PacLoader;
-import org.netty.manager.RemoteServerManager;
 import org.netty.mbean.IoAcceptorStat;
 import org.netty.proxy.SocksServerInitializer;
 import org.slf4j.Logger;
@@ -22,15 +19,22 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.traffic.GlobalTrafficShapingHandler;
 import io.netty.handler.traffic.TrafficCounter;
+import priv.lmoon.shadowsupdate.config.ConfigListFactory;
 import priv.lmoon.shadowsupdate.config.XmlConfig;
 
 public class SocksServer {
 
 	private static Logger logger = LoggerFactory.getLogger(SocksServer.class);
 
-//	private static final String CONFIG = "conf/config.xml";
+	private static final String CONFIG = "conf/config.xml";
 
 	private static final String PAC = "conf/pac.xml";
+	
+	private static final String OUT_PATH = "out/";
+
+	private static final String JSON_FILE_PATH_NAME = OUT_PATH + "gui-config.json";
+
+	private static final String QRCODE_PATH = OUT_PATH + "QRCode/";
 
 	private EventLoopGroup bossGroup = null;
 	private EventLoopGroup workerGroup = null;
@@ -49,12 +53,12 @@ public class SocksServer {
 
 	public void start() {
 		try {
+			XmlConfig.init(CONFIG);
+			ConfigListFactory.init();
+			ConfigLoader.init(OUT_PATH,QRCODE_PATH,JSON_FILE_PATH_NAME);
+			int localPort = ConfigLoader.getLocalPort();
+			PacLoader.init(PAC);
 			
-//			Config config = ConfigXmlLoader.load(CONFIG);			
-//			RemoteServerManager.init(config);
-			int localPort = ConfigLoader.getInstance().getLocalPort();
-			PacLoader.load(PAC);
-
 			bossGroup = new NioEventLoopGroup(1);
 			workerGroup = new NioEventLoopGroup();
 			bootstrap = new ServerBootstrap();

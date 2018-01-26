@@ -27,16 +27,11 @@ public class ConfigLoader {
 	
 	private static Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
 	
-	private static final String OUT_PATH = "out/";
-
-	private static final String PATH_NAME = OUT_PATH + "gui-config.json";
-//	private static final String EXE_NAME = "Shadowsocks.exe";
-//	private static final String EXE_PATH = HOME_PATH + EXE_NAME;
-	private static final String QRCODE_PATH = OUT_PATH + "QRCode/";
-	
 	private static final String SLEEP_TIME = "sleepTime";
 
 	private static final String LOCAL_PORT = "localPort";
+	
+	private static String outPath,qrcodePath,jsonFilePathName;
 	
 	private static List<ConfVO> oldList = null;
 	
@@ -49,25 +44,22 @@ public class ConfigLoader {
 	 */
 	private static long sleepTime;
 	
-	static{
-		init();
+	private ConfigLoader(){
+		
 	}
 	
-	private ConfigLoader(){}
-	
-	private static void init(){
+	/**
+	 * 需先初始化值
+	 * @param configPath
+	 */
+	public static void init(String outPath,String qrcodePath,String jsonFilePathName){
+		ConfigLoader.outPath = outPath;
+		ConfigLoader.qrcodePath = qrcodePath;
+		ConfigLoader.jsonFilePathName = jsonFilePathName;
 		buildFilePath();
-		localPort = Integer.parseInt(XmlConfig.getInstance().getValue(LOCAL_PORT));
-		sleepTime = Long.parseLong(XmlConfig.getInstance().getValue(SLEEP_TIME));
+		localPort = Integer.parseInt(XmlConfig.getValue(LOCAL_PORT));
+		sleepTime = Long.parseLong(XmlConfig.getValue(SLEEP_TIME));
 		start();
-	}
-	
-	public static ConfigLoader getInstance(){
-		return InstanceHandler.INSTANCE;
-	}
-	
-	private static class InstanceHandler{
-		private static final ConfigLoader INSTANCE = new ConfigLoader();
 	}
 	
 	private static void start(){
@@ -104,8 +96,8 @@ public class ConfigLoader {
 			RemoteServerManager.init(config);
 			
 			String content = buildContent(oldList);
-			FileUtil.writeFile(content, PATH_NAME);
-			QRcodeUtil.createQRCode(oldList, QRCODE_PATH);
+			FileUtil.writeFile(content, jsonFilePathName);
+			QRcodeUtil.createQRCode(oldList, qrcodePath);
 //			WinCmdUtil.restartExe(EXE_PATH);
 		} else {
 			logger.info("password ok!");
@@ -124,12 +116,12 @@ public class ConfigLoader {
 		}
 	}
 	
-	public int getLocalPort(){
+	public static int getLocalPort(){
 		return localPort;
 	}
 	
 	private static void buildFilePath(){
-		File file = new File(OUT_PATH);
+		File file = new File(outPath);
 		if(!file.isDirectory()){
 			file.mkdirs();
 		}
@@ -138,8 +130,7 @@ public class ConfigLoader {
 	private static List<ConfVO> getConfListFromServer() {
 		List<ConfVO> list = new ArrayList<ConfVO>();
 		ConfigList c;
-
-		Map<String, ConfigList> cMap = ConfigListFactory.getInstance().getConfigListMap();
+		Map<String, ConfigList> cMap = ConfigListFactory.getConfigListMap();
 		for (Iterator<Entry<String, ConfigList>> it = cMap.entrySet().iterator(); it.hasNext();) {
 			c = it.next().getValue();
 			if (c != null) {

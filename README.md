@@ -9,7 +9,7 @@
 
 chrome代理设置
 ---
-需要安装Proxy SwitchySharp插件（或者Proxy SwitchyOmega：https://github.com/FelisCatus/SwitchyOmega/releases），然后设置socks代理，指定本地代理服务器就行了
+需要安装Proxy SwitchySharp插件（或者Proxy SwitchyOmega：https://github.com/FelisCatus/SwitchyOmega/releases，在线规则：https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt），然后设置socks代理，指定本地代理服务器就行了
 
 
 firefox代理设置

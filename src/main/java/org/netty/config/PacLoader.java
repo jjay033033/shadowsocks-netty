@@ -29,42 +29,32 @@ public class PacLoader {
 
 	private static List<String> domainList = new ArrayList<String>();
 	private static List<String> tempList = new ArrayList<String>();
-	/**是否是全局代理模式**/
+	/** 是否是全局代理模式 **/
 	private static boolean _global_mode;
 
 	/** 重加载的间隔时间 **/
 	private static final long RELOAD_TIME = 30L;
 
 	private static long lastModify;
-	
+
 	private static String pacFilePath;
-	
-	private PacLoader(){}
-	
-	static{
-		start();
+
+	private PacLoader() {
 	}
-	
-	public static void init(String pacFilePath){
+
+	public static void init(String pacFilePath) {
 		PacLoader.pacFilePath = pacFilePath;
-	}
-	
-	private static void start(){
 		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
 
 			@Override
 			public void run() {
-				try {
-					load();
-				} catch (Exception e) {
-					log.error("load pac error", e);
-				}
+				load();
 			}
-		}, RELOAD_TIME, RELOAD_TIME, TimeUnit.SECONDS);
+		}, 0L, RELOAD_TIME, TimeUnit.SECONDS);
 	}
 
-	private static void load() throws Exception {
-		if(pacFilePath==null){
+	private static void load() {
+		if (pacFilePath == null) {
 			return;
 		}
 		File file = new File(pacFilePath);
@@ -76,7 +66,11 @@ public class PacLoader {
 		}
 		lastModify = file.lastModified();
 
-		loadFile(pacFilePath);
+		try {
+			loadFile(pacFilePath);
+		} catch (Exception e) {
+			log.error("load pac error", e);
+		}
 
 	}
 

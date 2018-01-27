@@ -85,8 +85,7 @@ public class UrlContent {
 			}
 			return sb.toString();
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("getURLContent:"+urlStr, e);
+			logger.error("连接失败："+urlStr, e);
 		} finally {
 			try {
 				if (br != null) {

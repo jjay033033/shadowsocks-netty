@@ -80,12 +80,12 @@ public class ConfigLoader {
 	
 	private static void load(){
 		Config config = new Config();
-		logger.info("get list started!");
+		logger.info("get config list started!");
 		List<ConfVO> newList = getConfListFromServer();
 //		List<ConfVO> oldList = getConfListFromJson(FileUtil.readFile(PATH_NAME));
 		Map<String, Object> compareMap = ConfListUtil.compareList(oldList, newList);
 		boolean isChange = (Boolean) compareMap.get("isChange");
-		logger.info("get list finished!");
+		logger.info("get config list finished!");
 		if (isChange) {
 			logger.info("password changed!");
 			oldList = (List<ConfVO>) compareMap.get("confList");

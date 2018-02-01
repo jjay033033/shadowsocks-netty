@@ -36,19 +36,19 @@ public class RemoteServerManager {
 	private static Config config;
 	private static Random random = new Random();
 
-//	static {
-//		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				try {
-//					checkStatus();
-//				} catch (Exception e) {
-//					logger.error("checkStatus error", e);
-//				}
-//			}
-//		}, CHECK_STATUS_DELAY_TIME, CHECK_STATUS_DELAY_TIME, TimeUnit.SECONDS);
-//	}
+	static {
+		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					checkStatus();
+				} catch (Exception e) {
+					logger.error("checkStatus error", e);
+				}
+			}
+		}, CHECK_STATUS_DELAY_TIME, CHECK_STATUS_DELAY_TIME, TimeUnit.SECONDS);
+	}
 
 	public static void init(Config config) {
 		RemoteServerManager.config = config;

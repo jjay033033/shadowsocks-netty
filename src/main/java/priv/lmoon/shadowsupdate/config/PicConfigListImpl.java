@@ -101,7 +101,7 @@ public class PicConfigListImpl implements ConfigList{
 				}
 			}
 		}catch(Exception e){
-			logger.error("",e);
+			logger.error("str:"+str,e);
 		}
 		return null;
 	}

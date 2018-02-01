@@ -36,19 +36,19 @@ public class RemoteServerManager {
 	private static Config config;
 	private static Random random = new Random();
 
-	static {
-		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					checkStatus();
-				} catch (Exception e) {
-					logger.error("checkStatus error", e);
-				}
-			}
-		}, CHECK_STATUS_DELAY_TIME, CHECK_STATUS_DELAY_TIME, TimeUnit.SECONDS);
-	}
+//	static {
+//		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				try {
+//					checkStatus();
+//				} catch (Exception e) {
+//					logger.error("checkStatus error", e);
+//				}
+//			}
+//		}, CHECK_STATUS_DELAY_TIME, CHECK_STATUS_DELAY_TIME, TimeUnit.SECONDS);
+//	}
 
 	public static void init(Config config) {
 		RemoteServerManager.config = config;
@@ -160,27 +160,27 @@ public class RemoteServerManager {
 
 	public static void main(String[] args) {
 		RemoteServer r = new RemoteServer();
-		String _ipAddr = "global.ishadowx.net";
+//		String _ipAddr = "global.ishadowx.net";
 //		String _ipAddr = "www.google.com";
-		String urlStr = "https://"+_ipAddr;
-		r.set_ipAddr(_ipAddr);
+//		String urlStr = "https://"+_ipAddr;
+		r.set_ipAddr("nl.91vps.us");
 		r.set_port(443);
-		long t1 = System.currentTimeMillis();
+//		long t1 = System.currentTimeMillis();
 		boolean connected = isConnected(r);
-		long t2 = System.currentTimeMillis();
-		
-		boolean testt = test(urlStr);
-		long t3 = System.currentTimeMillis();
-		long t4 = t3;
-		boolean ir = isReachable(_ipAddr);
-		long t5 = System.currentTimeMillis();
+//		long t2 = System.currentTimeMillis();
+//		
+//		boolean testt = test(urlStr);
+//		long t3 = System.currentTimeMillis();
+//		long t4 = t3;
+//		boolean ir = isReachable(_ipAddr);
+//		long t5 = System.currentTimeMillis();
 
 		System.out.println(connected);
-		System.out.println(testt);
-		System.out.println(ir);
-		System.out.println(t2 - t1);
-		System.out.println(t3 - t2);
-		System.out.println(t5 - t4);
+//		System.out.println(testt);
+//		System.out.println(ir);
+//		System.out.println(t2 - t1);
+//		System.out.println(t3 - t2);
+//		System.out.println(t5 - t4);
 	}
 
 }

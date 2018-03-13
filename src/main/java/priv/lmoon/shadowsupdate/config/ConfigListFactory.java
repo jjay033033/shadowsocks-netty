@@ -20,6 +20,7 @@ public class ConfigListFactory {
 	}
 	
 	public static void init(){
+		configMap.clear();
 		Map<String,ServerConfigVO> map = XmlConfig.getServerConfigMap();
 		int i = 0;
 		for(Iterator<String> it = map.keySet().iterator();it.hasNext();){

@@ -54,8 +54,7 @@ public class SocksServer {
 	public void start() {
 		try {
 			PacLoader.init(PAC);
-			XmlConfig.init(CONFIG);
-			ConfigListFactory.init();
+			XmlConfig.init(CONFIG);			
 			ConfigLoader.init(OUT_PATH,QRCODE_PATH,JSON_FILE_PATH_NAME);
 			int localPort = ConfigLoader.getLocalPort();			
 			

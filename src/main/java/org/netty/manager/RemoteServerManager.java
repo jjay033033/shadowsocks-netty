@@ -101,6 +101,17 @@ public class RemoteServerManager {
 				remoteServer.setStatus(UNAVAILABLE);
 			}
 		}
+		//两次确认不可用
+		for (RemoteServer remoteServer : remoteList) {
+			if(remoteServer.getStatus() == UNAVAILABLE){
+				for(int i=0;i<2;i++){
+					if (isConnected(remoteServer)) {
+						remoteServer.setStatus(AVAILABLE);
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	/**

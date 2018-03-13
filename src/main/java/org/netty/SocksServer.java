@@ -54,9 +54,8 @@ public class SocksServer {
 	public void start() {
 		try {
 			PacLoader.init(PAC);
-			XmlConfig.init(CONFIG);			
-			ConfigLoader.init(OUT_PATH,QRCODE_PATH,JSON_FILE_PATH_NAME);
-			int localPort = ConfigLoader.getLocalPort();			
+			XmlConfig.init(CONFIG,OUT_PATH,QRCODE_PATH,JSON_FILE_PATH_NAME);						
+			int localPort = XmlConfig.getLocalPort();			
 			
 			bossGroup = new NioEventLoopGroup(1);
 			workerGroup = new NioEventLoopGroup();

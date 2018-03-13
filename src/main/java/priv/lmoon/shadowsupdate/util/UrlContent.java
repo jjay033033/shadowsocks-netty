@@ -33,7 +33,7 @@ public class UrlContent {
 			@Override
 			public void changeUrl(String oldUrl, String newUrl) {
 				FileUtil.writeFileReplaceWord(SysConstants.CONFIG_PATH, oldUrl, newUrl);
-				XmlConfig.resetInstance();
+//				XmlConfig.resetInstance();
 				logger.info("'config.xml' changed!: "+oldUrl+" to "+newUrl);
 			}
 		});

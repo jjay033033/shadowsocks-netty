@@ -27,22 +27,13 @@ public class ConfigLoader {
 	
 	private static Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
 	
-	private static final String SLEEP_TIME = "sleepTime";
-
-	private static final String LOCAL_PORT = "localPort";
+	
 	
 	private static String outPath,qrcodePath,jsonFilePathName;
 	
 	private static List<ConfVO> oldList = null;
 	
 	private static List<RemoteServer> remoteList = new ArrayList<>();
-	
-	private static int localPort;
-	
-	/**
-	 * 检查ss账号密码间隔时间（秒）
-	 */
-	private static long sleepTime;
 	
 	private ConfigLoader(){
 		
@@ -57,8 +48,6 @@ public class ConfigLoader {
 		ConfigLoader.qrcodePath = qrcodePath;
 		ConfigLoader.jsonFilePathName = jsonFilePathName;
 		buildFilePath();
-		localPort = Integer.parseInt(XmlConfig.getValue(LOCAL_PORT));
-		sleepTime = Long.parseLong(XmlConfig.getValue(SLEEP_TIME));
 		start();
 	}
 	
@@ -74,7 +63,7 @@ public class ConfigLoader {
 					logger.error("load pac error", e);
 				}
 			}
-		}, 0L, sleepTime, TimeUnit.SECONDS);
+		}, 0L, XmlConfig.getSleepTime(), TimeUnit.SECONDS);
 
 	}
 	
@@ -91,7 +80,7 @@ public class ConfigLoader {
 			oldList = (List<ConfVO>) compareMap.get("confList");
 			
 			setRemoteList(oldList);			
-			config.set_localPort(localPort);
+			config.set_localPort(XmlConfig.getLocalPort());
 			config.setRemoteList(remoteList);;
 			RemoteServerManager.init(config);
 			
@@ -114,10 +103,6 @@ public class ConfigLoader {
 			rs.set_port(vo.getServer_port());
 			remoteList.add(rs);
 		}
-	}
-	
-	public static int getLocalPort(){
-		return localPort;
 	}
 	
 	private static void buildFilePath(){

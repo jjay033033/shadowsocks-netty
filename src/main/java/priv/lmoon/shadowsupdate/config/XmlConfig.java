@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.netty.config.ConfigLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,10 @@ public class XmlConfig {
 	private static String configPath;
 	
 	private static long lastModify;
+	
+	private static final String SLEEP_TIME = "sleepTime";
+
+	private static final String LOCAL_PORT = "localPort";
 
 	/** 重加载的间隔时间 **/
 	private static final long RELOAD_TIME = 30L;
@@ -39,9 +44,10 @@ public class XmlConfig {
 
 	}
 
-	public static void init(String configPath) {
+	public static void init(String configPath,String outPath,String qrcodePath,String jsonFilePathName) {
 		XmlConfig.configPath = configPath;
 		load();
+		ConfigLoader.init(outPath, qrcodePath, jsonFilePathName);;
 		//启动定时任务
 		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
 			@Override
@@ -135,26 +141,9 @@ public class XmlConfig {
 		}
 	}
 
-	// public static XmlConfig getInstance(){
-	// if(xmlConfig == null){
-	// xmlConfig = new XmlConfig();
-	//
-	// }
-	// return xmlConfig;
-	// }
-
-	public static void resetInstance() {
-		// xmlConfig = null;
-		init(configPath);
-	}
-
-	// public ServerConfigVo getServerConfigVo(String id){
-	// ServerConfigVo vo = serverMap.get(id);
-	// if(vo == null){
-	// vo = new ServerConfigVo();
-	// }
-	// return vo;
-	// }
+//	public static void resetInstance() {
+//		load();
+//	}
 
 	/**
 	 * 整个xml文件的map
@@ -176,6 +165,29 @@ public class XmlConfig {
 			return (String) map.get(key);
 		}
 		return null;
+	}
+	
+	public static int getLocalPort(){
+		try {
+			int port = Integer.parseInt(getValue(LOCAL_PORT));
+			return port;
+		} catch (NumberFormatException e) {
+			logger.error("",e);	
+			throw new RuntimeException(e);
+		}
+	}
+	
+	/**
+	 * 获取检查ss账号密码间隔时间（秒）
+	 */
+	public static long getSleepTime(){
+		try {
+			long sleepTime = Long.parseLong(getValue(SLEEP_TIME));
+			return sleepTime;
+		} catch (NumberFormatException e) {
+			logger.error("",e);	
+		}
+		return 300;
 	}
 
 	/**

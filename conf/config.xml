@@ -8,7 +8,7 @@
 	<servers>
 		<server>
 			<id>ishadowsocks</id>
-			<url>https://global.ishadowx.net/</url>
+			<url>http://ss.ishadowx.com/</url>
 			<begin>id=&quot;portfolio&quot;</begin>
 			<end>id=&quot;footer&quot;</end>
 			<type>0</type>

@@ -52,17 +52,20 @@ public final class SocksServerConnectHandler extends SimpleChannelInboundHandler
 		promise.addListener(new GenericFutureListener<Future<Channel>>() {
 			@Override
 			public void operationComplete(final Future<Channel> future) throws Exception {
+				//本地服务器发送请求到指定域名（被墙的则发去ss服务器地址）完成后
 				final Channel outboundChannel = future.getNow();
 				if (future.isSuccess()) {
 					final InRelayHandler inRelay = new InRelayHandler(ctx.channel(), SocksServerConnectHandler.this);
 					final OutRelayHandler outRelay = new OutRelayHandler(outboundChannel,
 							SocksServerConnectHandler.this);
-
+					//本地服务器回复本地客户端
 					ctx.channel().writeAndFlush(getSuccessResponse(request)).addListener(new ChannelFutureListener() {
 						@Override
 						public void operationComplete(ChannelFuture channelFuture) {
+							//本地服务器回复本地客户端完成后
 							try {
 								if (isProxy) {
+									//send请求去远程服务器
 									sendConnectRemoteMessage(request, outboundChannel);
 								}
 

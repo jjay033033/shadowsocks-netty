@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <pac>
-	<global_mode>false</global_mode>
+	<global_mode>true</global_mode>
 	<domains>
 		<domain>gimpshop.com</domain>
 		<domain>directcreative.com</domain>

@@ -2,7 +2,9 @@ package org.netty.proxy;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
+import org.bouncycastle.util.encoders.Hex;
 import org.netty.config.PacLoader;
 import org.netty.config.RemoteServer;
 import org.netty.encryption.CryptFactory;
@@ -188,7 +190,14 @@ public final class SocksServerConnectHandler extends SimpleChannelInboundHandler
 		int dataLength = data.length;
 		dataLength -= 3;
 		byte[] temp = new byte[dataLength];
+		logger.debug("connect连接Hex:"+Hex.toHexString(data));
 		System.arraycopy(data, 3, temp, 0, dataLength);
+		try {
+			logger.debug("connect连接:"+new String(temp, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return temp;
 	}
 

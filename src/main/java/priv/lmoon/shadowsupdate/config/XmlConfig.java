@@ -75,6 +75,7 @@ public class XmlConfig {
 			if (map == null || map.isEmpty()) {
 				throw new FileNotFoundException();
 			}
+			logger.info("config.xml is updated！");
 			initServerMap();
 			ConfigListFactory.init();
 		} catch (FileNotFoundException e) {

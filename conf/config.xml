@@ -4,6 +4,9 @@
 	<localPort>10800</localPort>
 
 	<sleepTime>300</sleepTime>
+	
+	<!-- ss从哪里获取：0表示此配置下的servers，1表示LMoon的net -->
+	<getFrom>1</getFrom>
 
 	<servers>
 		<server>

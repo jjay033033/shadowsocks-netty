@@ -36,6 +36,8 @@ public class XmlConfig {
 	private static final String SLEEP_TIME = "sleepTime";
 
 	private static final String LOCAL_PORT = "localPort";
+	
+	private static final String GET_FROM = "getFrom";
 
 	/** 重加载的间隔时间 **/
 	private static final long RELOAD_TIME = 30L;
@@ -189,6 +191,16 @@ public class XmlConfig {
 			logger.error("",e);	
 		}
 		return 300;
+	}
+	
+	public static int getFrom(){
+		try {
+			int from = Integer.parseInt(getValue(GET_FROM));
+			return from;
+		} catch (NumberFormatException e) {
+			logger.error("",e);	
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**

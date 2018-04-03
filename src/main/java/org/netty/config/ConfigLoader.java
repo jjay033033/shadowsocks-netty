@@ -10,6 +10,9 @@ import java.util.Map.Entry;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.netty.config.generator.ConfigFromMyWeb;
+import org.netty.config.generator.ConfigFromXml;
+import org.netty.config.generator.ConfigListGenerator;
 import org.netty.manager.RemoteServerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,35 +27,38 @@ import priv.lmoon.shadowsupdate.util.FileUtil;
 import priv.lmoon.shadowsupdate.vo.ConfVO;
 
 public class ConfigLoader {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
-	
-	
-	
-	private static String outPath,qrcodePath,jsonFilePathName;
-	
+
+	private static final int FROM_MY_WEB = 1;
+
+	private static final int FROM_XML = 0;
+
+	private static String outPath, qrcodePath, jsonFilePathName;
+
 	private static List<ConfVO> oldList = null;
-	
+
 	private static List<RemoteServer> remoteList = new ArrayList<>();
-	
-	private ConfigLoader(){
-		
+
+	private ConfigLoader() {
+
 	}
-	
+
 	/**
 	 * 需先初始化值
+	 * 
 	 * @param configPath
 	 */
-	public static void init(String outPath,String qrcodePath,String jsonFilePathName){
+	public static void init(String outPath, String qrcodePath, String jsonFilePathName) {
 		ConfigLoader.outPath = outPath;
 		ConfigLoader.qrcodePath = qrcodePath;
 		ConfigLoader.jsonFilePathName = jsonFilePathName;
 		buildFilePath();
 		start();
 	}
-	
-	private static void start(){
-		
+
+	private static void start() {
+
 		Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Runnable() {
 
 			@Override
@@ -66,36 +72,44 @@ public class ConfigLoader {
 		}, 0L, XmlConfig.getSleepTime(), TimeUnit.SECONDS);
 
 	}
-	
-	private static void load(){
+
+	private static void load() {
 		Config config = new Config();
 		logger.info("get config list started!");
-		List<ConfVO> newList = getConfListFromServer();
-//		List<ConfVO> oldList = getConfListFromJson(FileUtil.readFile(PATH_NAME));
+		ConfigListGenerator glg = null;
+		if (XmlConfig.getFrom() == FROM_MY_WEB) {
+			glg = ConfigFromMyWeb.getInstance();
+		}else{
+			glg = ConfigFromXml.getInstance();
+		}
+		List<ConfVO> newList = glg.getConfListFromServer();
+		// List<ConfVO> oldList =
+		// getConfListFromJson(FileUtil.readFile(PATH_NAME));
 		Map<String, Object> compareMap = ConfListUtil.compareList(oldList, newList);
 		boolean isChange = (Boolean) compareMap.get("isChange");
 		logger.info("get config list finished!");
 		if (isChange) {
 			logger.info("password changed!");
 			oldList = (List<ConfVO>) compareMap.get("confList");
-			
-			setRemoteList(oldList);			
+
+			setRemoteList(oldList);
 			config.set_localPort(XmlConfig.getLocalPort());
-			config.setRemoteList(remoteList);;
+			config.setRemoteList(remoteList);
+			;
 			RemoteServerManager.init(config);
-			
+
 			String content = buildContent(oldList);
 			FileUtil.writeFile(content, jsonFilePathName);
 			QRcodeUtil.createQRCode(oldList, qrcodePath);
-//			WinCmdUtil.restartExe(EXE_PATH);
+			// WinCmdUtil.restartExe(EXE_PATH);
 		} else {
-			logger.info("password ok!");
+			logger.info("password as before!");
 		}
 	}
-	
-	private static void setRemoteList(List<ConfVO> list){
+
+	private static void setRemoteList(List<ConfVO> list) {
 		remoteList.clear();
-		for(ConfVO vo:list){
+		for (ConfVO vo : list) {
 			RemoteServer rs = new RemoteServer();
 			rs.set_ipAddr(vo.getServer());
 			rs.set_method(vo.getMethod());
@@ -104,31 +118,14 @@ public class ConfigLoader {
 			remoteList.add(rs);
 		}
 	}
-	
-	private static void buildFilePath(){
+
+	private static void buildFilePath() {
 		File file = new File(outPath);
-		if(!file.isDirectory()){
+		if (!file.isDirectory()) {
 			file.mkdirs();
 		}
 	}
-	
-	private static List<ConfVO> getConfListFromServer() {
-		List<ConfVO> list = new ArrayList<ConfVO>();
-		ConfigList c;
-		Map<String, ConfigList> cMap = ConfigListFactory.getConfigListMap();
-		for (Iterator<Entry<String, ConfigList>> it = cMap.entrySet().iterator(); it.hasNext();) {
-			c = it.next().getValue();
-			if (c != null) {
-				List<ConfVO> cList = c.getConfigList();
-				if (cList != null && !cList.isEmpty()) {
-					list.addAll(cList);
-				}
-			}
-		}
 
-		return list;
-	}
-	
 	private static String buildContent(List<ConfVO> list) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		map.put("configs", list);

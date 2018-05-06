@@ -25,7 +25,9 @@ public class ConfigFromMyWeb implements ConfigListGenerator {
 
 	private static final Logger logger = LoggerFactory.getLogger(ConfigFromMyWeb.class);
 
-	private static final String MY_WEB_URL = "https://vast-inlet-75928.herokuapp.com/s/info?method=getss";
+//	private static final String MY_WEB_URL = "https://vast-inlet-75928.herokuapp.com/s/info?method=getss";
+	
+	private static final String MY_WEB_URL = "http://thess-lmoon-project.7e14.starter-us-west-2.openshiftapps.com/s/info?method=getss";
 	
 	private static ConfigFromMyWeb configFromMyWeb = new ConfigFromMyWeb();
 	

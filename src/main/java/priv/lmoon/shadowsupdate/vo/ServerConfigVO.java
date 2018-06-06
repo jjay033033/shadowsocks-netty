@@ -1,5 +1,7 @@
 package priv.lmoon.shadowsupdate.vo;
 
+import java.util.Map;
+
 public class ServerConfigVO {
 	
 	private String id;
@@ -13,15 +15,19 @@ public class ServerConfigVO {
 	private int type;
 	
 	//TextServer参数
-	private String serverIpBegin;
-	private String serverIpEnd;
-	private String passwordBegin;
-	private String passwordEnd;
-	private String encryptionBegin;
-	private String encryptionEnd;
-	private String serverPortBegin;
-	private String serverPortEnd;
+//	private String serverIpBegin;
+//	private String serverIpEnd;
+//	private String passwordBegin;
+//	private String passwordEnd;
+//	private String encryptionBegin;
+//	private String encryptionEnd;
+//	private String serverPortBegin;
+//	private String serverPortEnd;
 	
+	private Map<Integer,ConfParam> params;
+	
+	
+
 	//PicServer参数
 	private String picUrlBegin;
 	private String picUrlEnd;
@@ -52,69 +58,69 @@ public class ServerConfigVO {
 		this.severPicFlag = severPicFlag;
 	}
 
-	public String getServerIpBegin() {
-		return serverIpBegin;
-	}
-
-	public void setServerIpBegin(String serverIpBegin) {
-		this.serverIpBegin = serverIpBegin;
-	}
-
-	public String getServerIpEnd() {
-		return serverIpEnd;
-	}
-
-	public void setServerIpEnd(String serverIpEnd) {
-		this.serverIpEnd = serverIpEnd;
-	}
-
-	public String getPasswordBegin() {
-		return passwordBegin;
-	}
-
-	public void setPasswordBegin(String passwordBegin) {
-		this.passwordBegin = passwordBegin;
-	}
-
-	public String getPasswordEnd() {
-		return passwordEnd;
-	}
-
-	public void setPasswordEnd(String passwordEnd) {
-		this.passwordEnd = passwordEnd;
-	}
-
-	public String getEncryptionBegin() {
-		return encryptionBegin;
-	}
-
-	public void setEncryptionBegin(String encryptionBegin) {
-		this.encryptionBegin = encryptionBegin;
-	}
-
-	public String getEncryptionEnd() {
-		return encryptionEnd;
-	}
-
-	public void setEncryptionEnd(String encryptionEnd) {
-		this.encryptionEnd = encryptionEnd;
-	}
-
-	public String getServerPortBegin() {
-		return serverPortBegin;
-	}
-
-	public void setServerPortBegin(String serverPortBegin) {
-		this.serverPortBegin = serverPortBegin;
-	}
-
-	public String getServerPortEnd() {
-		return serverPortEnd;
-	}
-
-	public void setServerPortEnd(String serverPortEnd) {
-		this.serverPortEnd = serverPortEnd;
-	}
+//	public String getServerIpBegin() {
+//		return serverIpBegin;
+//	}
+//
+//	public void setServerIpBegin(String serverIpBegin) {
+//		this.serverIpBegin = serverIpBegin;
+//	}
+//
+//	public String getServerIpEnd() {
+//		return serverIpEnd;
+//	}
+//
+//	public void setServerIpEnd(String serverIpEnd) {
+//		this.serverIpEnd = serverIpEnd;
+//	}
+//
+//	public String getPasswordBegin() {
+//		return passwordBegin;
+//	}
+//
+//	public void setPasswordBegin(String passwordBegin) {
+//		this.passwordBegin = passwordBegin;
+//	}
+//
+//	public String getPasswordEnd() {
+//		return passwordEnd;
+//	}
+//
+//	public void setPasswordEnd(String passwordEnd) {
+//		this.passwordEnd = passwordEnd;
+//	}
+//
+//	public String getEncryptionBegin() {
+//		return encryptionBegin;
+//	}
+//
+//	public void setEncryptionBegin(String encryptionBegin) {
+//		this.encryptionBegin = encryptionBegin;
+//	}
+//
+//	public String getEncryptionEnd() {
+//		return encryptionEnd;
+//	}
+//
+//	public void setEncryptionEnd(String encryptionEnd) {
+//		this.encryptionEnd = encryptionEnd;
+//	}
+//
+//	public String getServerPortBegin() {
+//		return serverPortBegin;
+//	}
+//
+//	public void setServerPortBegin(String serverPortBegin) {
+//		this.serverPortBegin = serverPortBegin;
+//	}
+//
+//	public String getServerPortEnd() {
+//		return serverPortEnd;
+//	}
+//
+//	public void setServerPortEnd(String serverPortEnd) {
+//		this.serverPortEnd = serverPortEnd;
+//	}
 
 	public String getId() {
 		return id;
@@ -155,14 +161,19 @@ public class ServerConfigVO {
 	public void setType(int type) {
 		this.type = type;
 	}
+	
+	public Map<Integer, ConfParam> getParams() {
+		return params;
+	}
+
+	public void setParams(Map<Integer, ConfParam> params) {
+		this.params = params;
+	}
 
 	@Override
 	public String toString() {
-		return "ServerConfigVo [id=" + id + ", url=" + url + ", begin=" + begin + ", end=" + end + ", type=" + type
-				+ ", serverIpBegin=" + serverIpBegin + ", serverIpEnd=" + serverIpEnd + ", passwordBegin="
-				+ passwordBegin + ", passwordEnd=" + passwordEnd + ", encryptionBegin=" + encryptionBegin
-				+ ", encryptionEnd=" + encryptionEnd + ", serverPortBegin=" + serverPortBegin + ", serverPortEnd="
-				+ serverPortEnd + ", picUrlBegin=" + picUrlBegin + ", picUrlEnd=" + picUrlEnd + ", severPicFlag="
+		return "ServerConfigVO [id=" + id + ", url=" + url + ", begin=" + begin + ", end=" + end + ", type=" + type
+				+ ", params=" + params + ", picUrlBegin=" + picUrlBegin + ", picUrlEnd=" + picUrlEnd + ", severPicFlag="
 				+ severPicFlag + "]";
 	}
 

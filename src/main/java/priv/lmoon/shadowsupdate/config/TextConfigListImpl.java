@@ -5,6 +5,7 @@ package priv.lmoon.shadowsupdate.config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import priv.lmoon.shadowsupdate.util.UrlContent;
+import priv.lmoon.shadowsupdate.vo.ConfParam;
 import priv.lmoon.shadowsupdate.vo.ConfVO;
 import priv.lmoon.shadowsupdate.vo.ServerConfigVO;
 
@@ -57,54 +59,57 @@ public class TextConfigListImpl implements ConfigList {
 		try {
 			while (content.length() > 0) {
 				ConfVO confVo = new ConfVO();
-
-				// int findIdx = content.indexOf(vo.getServerIpBegin());
-				int serverIpIdx = indexOfRegex(content, vo.getServerIpBegin());
-
-				if (serverIpIdx == -1) {
-					break;
-				}
-
-				// int serverIpIdx = findIdx + vo.getServerIpBegin().length();
-				// int serverIpEndIds = content.indexOf(vo.getServerIpEnd(),
-				// serverIpIdx);
-				int serverIpEndIds = content.indexOf(vo.getServerIpEnd(), serverIpIdx);
-
-				// int serverPortIdx = content.indexOf(vo.getServerPortBegin())
-				// + vo.getServerPortBegin().length();
-				// int serverPortEndIdx = content.indexOf(vo.getServerPortEnd(),
-				// serverPortIdx);
-				//
-				// int passwordIdx = content.indexOf(vo.getPasswordBegin()) +
-				// vo.getPasswordBegin().length();
-				// int passwordEndIdx = content.indexOf(vo.getPasswordEnd(),
-				// passwordIdx);
-				//
-				// int encryptionIdx = content.indexOf(vo.getEncryptionBegin())
-				// + vo.getEncryptionBegin().length();
-				// int encryptionEndIdx = content.indexOf(vo.getEncryptionEnd(),
-				// encryptionIdx);
-
-				int serverPortIdx = indexOfRegex(content, vo.getServerPortBegin());
-				int serverPortEndIdx = content.indexOf(vo.getServerPortEnd(), serverPortIdx);
-
-				int passwordIdx = indexOfRegex(content, vo.getPasswordBegin());
-				int passwordEndIdx = content.indexOf(vo.getPasswordEnd(), passwordIdx);
-
-				int encryptionIdx = indexOfRegex(content, vo.getEncryptionBegin());
-				int encryptionEndIdx = content.indexOf(vo.getEncryptionEnd(), encryptionIdx);
-
-				confVo.setServer(content.substring(serverIpIdx, serverIpEndIds));
-				String serverPort = content.substring(serverPortIdx, serverPortEndIdx);
-				confVo.setServer_port(StringUtils.isBlank(serverPort) ? 0 : Integer.parseInt(serverPort));
-				confVo.setPassword(content.substring(passwordIdx, passwordEndIdx));
-				confVo.setMethod(content.substring(encryptionIdx, encryptionEndIdx));
 				confVo.setRemarks(vo.getId());
+				Map<Integer,ConfParam> params = vo.getParams();
+				int beginIdx = 0;
+				int endIdx = 0;
+				for(int i=1;i<5;i++) {
+					ConfParam cp = params.get(i);
+					String name = cp.getName();
+					beginIdx = indexOfRegex(content, cp.getBegin());
+					if (i==1&&beginIdx == -1) {
+						return list;
+					}
+					endIdx = content.indexOf(cp.getEnd(), beginIdx);
+					if("serverIp".equals(name)) {
+						confVo.setServer(content.substring(beginIdx, endIdx));
+					}else if("serverPort".equals(name)) {
+						String serverPort = content.substring(beginIdx, endIdx);
+						confVo.setServer_port(StringUtils.isBlank(serverPort) ? 0 : Integer.parseInt(serverPort));
+					}else if("password".equals(name)) {
+						confVo.setPassword(content.substring(beginIdx, endIdx));
+					}else if("encryption".equals(name)) {
+						confVo.setMethod(content.substring(beginIdx, endIdx));
+					}
+				}
+//				int serverIpIdx = indexOfRegex(content, vo.getServerIpBegin());
+//
+//				if (serverIpIdx == -1) {
+//					break;
+//				}
+//
+//				int serverIpEndIds = content.indexOf(vo.getServerIpEnd(), serverIpIdx);
+//
+//				int serverPortIdx = indexOfRegex(content, vo.getServerPortBegin());
+//				int serverPortEndIdx = content.indexOf(vo.getServerPortEnd(), serverPortIdx);
+//
+//				int passwordIdx = indexOfRegex(content, vo.getPasswordBegin());
+//				int passwordEndIdx = content.indexOf(vo.getPasswordEnd(), passwordIdx);
+//
+//				int encryptionIdx = indexOfRegex(content, vo.getEncryptionBegin());
+//				int encryptionEndIdx = content.indexOf(vo.getEncryptionEnd(), encryptionIdx);
+
+//				confVo.setServer(content.substring(serverIpIdx, serverIpEndIds));
+//				String serverPort = content.substring(serverPortIdx, serverPortEndIdx);
+//				confVo.setServer_port(StringUtils.isBlank(serverPort) ? 0 : Integer.parseInt(serverPort));
+//				confVo.setPassword(content.substring(passwordIdx, passwordEndIdx));
+//				confVo.setMethod(content.substring(encryptionIdx, encryptionEndIdx));
+//				confVo.setRemarks(vo.getId());
 				if (StringUtils.isNotBlank(confVo.getMethod()) && StringUtils.isNotBlank(confVo.getPassword())
 						&& StringUtils.isNotBlank(confVo.getServer()) && confVo.getServer_port() != 0) {
 					list.add(confVo);
 				}
-				content = content.substring(encryptionEndIdx);
+				content = content.substring(endIdx);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

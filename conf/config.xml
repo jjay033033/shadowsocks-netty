@@ -6,23 +6,70 @@
 	<sleepTime>300</sleepTime>
 	
 	<!-- ss从哪里获取：0表示此配置下的servers，1表示LMoon的net -->
-	<getFrom>1</getFrom>
+	<getFrom>0</getFrom>
 
 	<servers>
-		<server>
+	<server>
+			<id>vps168</id>
+			<url>https://www.vps168.tk/post/4.html</url>
+			<begin>IP地址</begin>
+			<end>混淆</end>
+			<type>0</type>
+			<param>
+				<name>serverIp</name>
+				<begin>IP地址[^&lt;p&gt;]*&lt;p&gt;</begin>
+				<end>&lt;</end>
+				<no>1</no>
+			</param>
+			<param>
+				<name>serverPort</name>
+				<begin>&lt;/td&gt;&lt;td[^&gt;]*&gt;</begin>
+				<end>&lt;</end>
+				<no>3</no>
+			</param>
+			<param>
+				<name>password</name>
+				<begin>&lt;span[^&gt;]*&gt;</begin>
+				<end>&lt;</end>
+				<no>4</no>
+			</param>
+			<param>
+				<name>encryption</name>
+				<begin>&lt;/td&gt;&lt;td[^&gt;]*&gt;</begin>
+				<end>&lt;</end>
+				<no>2</no>
+			</param>
+		</server>
+		<!-- <server>
 			<id>ishadowsocks</id>
-			<url>https://get.ishadowx.net/</url>
+			<url>https://my.ishadowx.net/</url>
 			<begin>id=&quot;portfolio&quot;</begin>
 			<end>id=&quot;footer&quot;</end>
 			<type>0</type>
-			<serverIpBegin>IP Address:&lt;span[^&gt;]*&gt;</serverIpBegin>
-			<serverIpEnd>&lt;</serverIpEnd>
-			<serverPortBegin>Port:&lt;span[^&gt;]*&gt;</serverPortBegin>
-			<serverPortEnd>&lt;</serverPortEnd>
-			<passwordBegin>Password:&lt;span[^&gt;]*&gt;</passwordBegin>
-			<passwordEnd>&lt;</passwordEnd>
-			<encryptionBegin>Method:</encryptionBegin>
-			<encryptionEnd>&lt;</encryptionEnd>
+			<param>
+				<name>serverIp</name>
+				<begin>IP Address:&lt;span[^&gt;]*&gt;</begin>
+				<end>&lt;</end>
+				<no>1</no>
+			</param>
+			<param>
+				<name>serverPort</name>
+				<begin>Port:&lt;span[^&gt;]*&gt;</begin>
+				<end>&lt;</end>
+				<no>2</no>
+			</param>
+			<param>
+				<name>password</name>
+				<begin>Password:&lt;span[^&gt;]*&gt;</begin>
+				<end>&lt;</end>
+				<no>3</no>
+			</param>
+			<param>
+				<name>encryption</name>
+				<begin>Method:</begin>
+				<end>&lt;</end>
+				<no>4</no>
+			</param>
 		</server>
 		<server>
 			<id>shadowsocks8</id>
@@ -34,7 +81,7 @@
 			<picUrlEnd>&quot;</picUrlEnd>
 			<severPicFlag>server</severPicFlag>
 		</server>
-		<!-- <server>
+		<server>
 			<id>freessr</id>
 			<url>https://freessr.xyz/</url>
 			<begin>免费shadowsocks账号</begin>

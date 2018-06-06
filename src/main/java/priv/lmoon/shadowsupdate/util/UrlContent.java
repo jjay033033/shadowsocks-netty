@@ -152,16 +152,7 @@ public class UrlContent {
 		if(isHttps){
 			HttpsURLConnection hsc = (HttpsURLConnection) conn;
 			hsc.setSSLSocketFactory(new MySSLSocketFactory());
-//			hsc.setHostnameVerifier(new HostnameVerifier() {
-//				
-//				@Override
-//				public boolean verify(String arg0, SSLSession arg1) {
-//					// TODO Auto-generated method stub
-//					return true;
-//				}
-//			});
 		}
-//		connection.setRequestMethod("GET"); 
 	}
 
 }

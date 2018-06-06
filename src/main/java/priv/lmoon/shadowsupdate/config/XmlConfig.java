@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import priv.lmoon.shadowsupdate.SysConstants;
 import priv.lmoon.shadowsupdate.util.XmlUtil;
+import priv.lmoon.shadowsupdate.vo.ConfParam;
 import priv.lmoon.shadowsupdate.vo.ServerConfigVO;
 
 public class XmlConfig {
@@ -120,14 +122,26 @@ public class XmlConfig {
 					vo.setUrl((String) item.get("url"));
 					vo.setType(Integer.parseInt((String) item.get("type")));
 					if (vo.getType() == SysConstants.ServerType.TEXT) {
-						vo.setServerIpBegin((String) item.get("serverIpBegin"));
-						vo.setServerIpEnd((String) item.get("serverIpEnd"));
-						vo.setServerPortBegin((String) item.get("serverPortBegin"));
-						vo.setServerPortEnd((String) item.get("serverPortEnd"));
-						vo.setPasswordBegin((String) item.get("passwordBegin"));
-						vo.setPasswordEnd((String) item.get("passwordEnd"));
-						vo.setEncryptionBegin((String) item.get("encryptionBegin"));
-						vo.setEncryptionEnd((String) item.get("encryptionEnd"));
+						List<Map> paramList = (List<Map>) item.get("param");
+						Map<Integer,ConfParam> params = new HashMap<Integer, ConfParam>();
+						for(Map paramMap:paramList) {
+							ConfParam confParam = new ConfParam();
+							confParam.setBegin((String)paramMap.get("begin"));
+							confParam.setEnd((String)paramMap.get("end"));
+							confParam.setName((String)paramMap.get("name"));
+							int no = Integer.parseInt((String) paramMap.get("no"));
+							confParam.setNo(no);
+							params.put(no, confParam);
+						}
+						vo.setParams(params);
+//						vo.setServerIpBegin((String) item.get("serverIpBegin"));
+//						vo.setServerIpEnd((String) item.get("serverIpEnd"));
+//						vo.setServerPortBegin((String) item.get("serverPortBegin"));
+//						vo.setServerPortEnd((String) item.get("serverPortEnd"));
+//						vo.setPasswordBegin((String) item.get("passwordBegin"));
+//						vo.setPasswordEnd((String) item.get("passwordEnd"));
+//						vo.setEncryptionBegin((String) item.get("encryptionBegin"));
+//						vo.setEncryptionEnd((String) item.get("encryptionEnd"));
 					} else if (vo.getType() == SysConstants.ServerType.PIC) {
 						vo.setPicUrlBegin((String) item.get("picUrlBegin"));
 						vo.setPicUrlEnd((String) item.get("picUrlEnd"));

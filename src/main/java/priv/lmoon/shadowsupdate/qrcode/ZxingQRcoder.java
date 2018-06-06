@@ -111,6 +111,25 @@ public class ZxingQRcoder implements QRcoder {
 		}
 		return null;
 	}
+	
+	public String decodeTest(String urlStr) {
+		try {
+			BufferedImage image = ImageIO.read(new File(urlStr));
+			LuminanceSource source = new BufferedImageLuminanceSource(image);
+			Binarizer binarizer = new HybridBinarizer(source);
+			BinaryBitmap binaryBitmap = new BinaryBitmap(binarizer);
+			Map<DecodeHintType, Object> hints = new HashMap<DecodeHintType, Object>();
+			hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
+			hints.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
+			// hint.put(DecodeHintType., "UTF-8");
+			Result result = new MultiFormatReader().decode(binaryBitmap, hints);
+			return result.getText();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 //	public void testEncode() throws WriterException, IOException {
 //		String filePath = "D://";
@@ -152,7 +171,8 @@ public class ZxingQRcoder implements QRcoder {
 
 	public static void main(String[] args) throws WriterException, IOException {
 		ZxingQRcoder qr = new ZxingQRcoder();
-		qr.encode("http://my.shadowsocks8.org/", new FileOutputStream(new File("d://tt.jpg")));
+		System.out.println(qr.decodeTest("C:\\Users\\LMoon\\Desktop\\rrr.jpg"));
+//		qr.encode("http://my.shadowsocks8.org/", new FileOutputStream(new File("d://tt.jpg")));
 //		System.out.println(qr.decode("http://my.shadowsocks8.org/images/server03.png"));
 //		 qr.testEncode();
 		// qr.testDecode();

@@ -44,6 +44,7 @@ public class UrlContent {
 		InputStreamReader isr = null;
 		BufferedReader br = null;
 		StringBuffer sb = new StringBuffer();
+		boolean endStrNotEmpty = endStr!=null&&!endStr.isEmpty();
 		try {
 			UrlInfo urlInfo = normalizeUrl(urlStr);
 			URL url = new URL(urlInfo.getUrl());
@@ -75,15 +76,28 @@ public class UrlContent {
 				begin = true;
 			}
 			while ((buf = br.readLine()) != null) {
-				if(begin){
-					sb.append(buf.trim());
-					if((endStr!=null&&!endStr.isEmpty()) && buf.contains(endStr)){
-						break;
+				if(begin){							
+					if(endStrNotEmpty){
+						int endIdx = buf.indexOf(endStr);
+						if(endIdx>-1){
+							sb.append(buf.substring(0, endIdx).trim());
+							break;
+						}
 					}
+					sb.append(buf.trim());		
 				}else{
-					if (buf.contains(beginStr)) {
+					int beginIdx = buf.indexOf(beginStr);
+					if (beginIdx>-1) {
+						if(endStrNotEmpty){
+							int endIdx = buf.indexOf(endStr);
+							if(endIdx>-1){
+								sb.append(buf.substring(beginIdx, endIdx).trim());
+								break;
+							}
+						}
 						begin = true;
-						sb.append(buf.trim());
+						String substring = buf.substring(beginIdx);
+						sb.append(substring.trim());
 					} 
 				}
 			}

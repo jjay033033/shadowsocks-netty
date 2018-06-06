@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import priv.lmoon.shadowsupdate.qrcode.Base64Coder;
 import priv.lmoon.shadowsupdate.qrcode.QRcoder;
+import priv.lmoon.shadowsupdate.qrcode.SwetakeQRcoder;
 import priv.lmoon.shadowsupdate.qrcode.ZxingQRcoder;
 import priv.lmoon.shadowsupdate.util.UrlContent;
 import priv.lmoon.shadowsupdate.vo.ConfVO;
@@ -53,7 +54,8 @@ public class PicConfigListImpl implements ConfigList{
 			return list;
 		}
 		try{
-			QRcoder qr = new ZxingQRcoder();
+//			QRcoder qr = new ZxingQRcoder();
+			QRcoder qr = new SwetakeQRcoder();
 			while(content.length()>0) {
 				int findIdx = content.indexOf(vo.getPicUrlBegin());
 				
@@ -81,7 +83,7 @@ public class PicConfigListImpl implements ConfigList{
 	}
 	
 	private String getImgUrl(String str){
-		return str.startsWith(vo.getUrl())?str:vo.getUrl()+str;
+		return str.startsWith("http")?str:vo.getUrl()+str;
 	}
 	
 	//rc4-md5:71973556@138.68.61.42:23456

@@ -5,6 +5,7 @@ package priv.lmoon.shadowsupdate.qrcode;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -170,12 +171,15 @@ public class ZxingQRcoder implements QRcoder {
 //	}
 
 	public static void main(String[] args) throws WriterException, IOException {
-		ZxingQRcoder qr = new ZxingQRcoder();
-		System.out.println(qr.decodeTest("C:\\Users\\LMoon\\Desktop\\rrr.jpg"));
+//		ZxingQRcoder qr = new ZxingQRcoder();
+//		System.out.println(qr.decodeTest("C:\\Users\\LMoon\\Desktop\\rrr.jpg"));
 //		qr.encode("http://my.shadowsocks8.org/", new FileOutputStream(new File("d://tt.jpg")));
 //		System.out.println(qr.decode("http://my.shadowsocks8.org/images/server03.png"));
 //		 qr.testEncode();
 		// qr.testDecode();
+		URL url = new URL("https://www.vps168.tk/zb_users/upload/2018/06/20180605130227152817494754362.jpg");
+		BufferedImage image = ImageIO.read(url.openStream());
+		ImageIO.write(image, "jpeg", new File("d://a.jpg"));
 	}
 
 }

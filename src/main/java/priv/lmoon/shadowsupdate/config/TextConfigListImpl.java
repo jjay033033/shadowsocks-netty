@@ -71,16 +71,21 @@ public class TextConfigListImpl implements ConfigList {
 						return list;
 					}
 					endIdx = content.indexOf(cp.getEnd(), beginIdx);
+					String paramStr = content.substring(beginIdx, endIdx);
 					if("serverIp".equals(name)) {
-						confVo.setServer(content.substring(beginIdx, endIdx));
+						if(!paramStr.matches("^[\\w\\.]+$")){
+							return list;
+						}
+						confVo.setServer(paramStr);
 					}else if("serverPort".equals(name)) {
-						String serverPort = content.substring(beginIdx, endIdx);
+						String serverPort = paramStr;
 						confVo.setServer_port(StringUtils.isBlank(serverPort) ? 0 : Integer.parseInt(serverPort));
 					}else if("password".equals(name)) {
-						confVo.setPassword(content.substring(beginIdx, endIdx));
+						confVo.setPassword(paramStr);
 					}else if("encryption".equals(name)) {
-						confVo.setMethod(content.substring(beginIdx, endIdx));
+						confVo.setMethod(paramStr);
 					}
+					content = content.substring(endIdx);
 				}
 //				int serverIpIdx = indexOfRegex(content, vo.getServerIpBegin());
 //
@@ -109,7 +114,7 @@ public class TextConfigListImpl implements ConfigList {
 						&& StringUtils.isNotBlank(confVo.getServer()) && confVo.getServer_port() != 0) {
 					list.add(confVo);
 				}
-				content = content.substring(endIdx);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,10 +138,10 @@ public class TextConfigListImpl implements ConfigList {
 	public static void main(String[] args) {
 		// System.out.println(new
 		// TextConfigList("ishadowsocks").getConfigList());
-		String c = "This software supported on most common devices like Windows/iPhone/iPad/Android/Macbook. There are only two steps to get it working. First, download and install it. Second, open it and scan QR image. Servers will be configured automatically. Then surfing any websites you like";
-		System.out.println(c.indexOf("it"));
-		System.out.println(indexOfRegex(c, "it"));
-
+//		String c = "This software supported on most common devices like Windows/iPhone/iPad/Android/Macbook. There are only two steps to get it working. First, download and install it. Second, open it and scan QR image. Servers will be configured automatically. Then surfing any websites you like";
+//		System.out.println(c.indexOf("it"));
+//		System.out.println(indexOfRegex(c, "it"));
+		System.out.println("107.173.171.12".matches("^[\\w\\.]+$"));
 	}
 
 }

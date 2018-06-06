@@ -128,5 +128,20 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.47</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.swetake</groupId>
+			<artifactId>qrcode</artifactId>
+			<version>1.0</version>
+			<systemPath>${project.basedir}/lib/Qrcode_swetake.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
+		<dependency>
+			<groupId>jp.sourceforge</groupId>
+			<artifactId>qrcode</artifactId>
+			<version>1.0</version>
+			<systemPath>${project.basedir}/lib/QRCode.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
 	</dependencies>
 </project>

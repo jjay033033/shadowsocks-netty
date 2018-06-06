@@ -443,9 +443,16 @@ public class HttpUtil {
 //		download(
 //				"https://d.pcs.baidu.com/file/5c4ec96e0602ad9d4f5fe775e8f6ed89?fid=660976564-250528-677635646695251&time=1508925401&rt=sh&sign=FDTAERV-DCb740ccc5511e5e8fedcff06b081203-nS6u7fjgOaiontHvrQFmmx%2FUWKM%3D&expires=8h&chkv=1&chkbd=0&chkpc=&dp-logid=6905609891134183393&dp-callid=0&r=588511371",
 //				"./res/music/张赫宣-会哭的人不一定流泪2.flac");
+		
+		//http://thess-lmoon-project.7e14.starter-us-west-2.openshiftapps.com/ss.jsp
+		long t2 = System.currentTimeMillis();
+		System.out.println(get("http://thess-lmoon-project.7e14.starter-us-west-2.openshiftapps.com/ss.jsp", null, null, connectTimeout, readTimeout, charset));
+		System.out.println(System.currentTimeMillis()-t2);
+		
 		long t1 = System.currentTimeMillis();
-		System.out.println(get("https://vast-inlet-75928.herokuapp.com/ss", null, null, connectTimeout, readTimeout, charset));
+		System.out.println(get("https://vast-inlet-75928.herokuapp.com/s/info?method=getss", null, null, connectTimeout, readTimeout, charset));
 		System.out.println(System.currentTimeMillis()-t1);
+		
 	}
 
 }

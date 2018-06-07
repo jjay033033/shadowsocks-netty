@@ -19,7 +19,7 @@
 			<picUrlEnd>&quot;</picUrlEnd>
 			<severPicFlag></severPicFlag>
 		</server>
-		<server>
+		<!--<server>
 			<id>ishadowsocks</id>
 			<url>https://my.ishadowx.net/</url>
 			<begin>id=&quot;portfolio&quot;</begin>
@@ -60,7 +60,7 @@
 			<picUrlEnd>&quot;</picUrlEnd>
 			<severPicFlag>server</severPicFlag>
 		</server>
-		<!--<server>
+		<server>
 			<id>vps168</id>
 			<url>https://www.vps168.tk/post/4.html</url>
 			<begin>IP地址</begin>

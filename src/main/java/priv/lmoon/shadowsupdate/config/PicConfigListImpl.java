@@ -68,9 +68,13 @@ public class PicConfigListImpl implements ConfigList{
 				
 				String serverStr = content.substring(serverIdx, serverEnd);
 				if(serverStr.contains(vo.getSeverPicFlag())){
-					ConfVO vo = getConfFromStr(Base64Coder.decodeBase64ForSS(qr.decode(getImgUrl(serverStr.trim()))));
-					if(vo!=null){
-						list.add(vo);
+					String imgUrl = getImgUrl(serverStr.trim());
+					String decode = qr.decode(imgUrl);
+					if(StringUtils.isNotBlank(decode)){
+						ConfVO vo = getConfFromStr(Base64Coder.decodeBase64ForSS(decode));
+						if(vo!=null){
+							list.add(vo);
+						}
 					}
 				}
 				content = content.substring(serverEnd);

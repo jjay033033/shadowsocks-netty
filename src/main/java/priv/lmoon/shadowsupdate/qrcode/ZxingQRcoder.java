@@ -5,11 +5,10 @@ package priv.lmoon.shadowsupdate.qrcode;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -34,6 +33,9 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
+
+import priv.lmoon.shadowsupdate.util.CloseUtil;
+import priv.lmoon.shadowsupdate.util.UrlContent;
 
 /**
  * @author LMoon
@@ -94,9 +96,10 @@ public class ZxingQRcoder implements QRcoder {
 	 */
 	@Override
 	public String decode(String urlStr) {
-		try {
-			URL url = new URL(urlStr);
-			BufferedImage image = ImageIO.read(url.openStream());
+		InputStream inputStream = null;
+		try {			
+			inputStream = UrlContent.getUrlInputStream(urlStr);
+			BufferedImage image = ImageIO.read(inputStream);
 			LuminanceSource source = new BufferedImageLuminanceSource(image);
 			Binarizer binarizer = new HybridBinarizer(source);
 			BinaryBitmap binaryBitmap = new BinaryBitmap(binarizer);
@@ -109,25 +112,8 @@ public class ZxingQRcoder implements QRcoder {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public String decodeTest(String urlStr) {
-		try {
-			BufferedImage image = ImageIO.read(new File(urlStr));
-			LuminanceSource source = new BufferedImageLuminanceSource(image);
-			Binarizer binarizer = new HybridBinarizer(source);
-			BinaryBitmap binaryBitmap = new BinaryBitmap(binarizer);
-			Map<DecodeHintType, Object> hints = new HashMap<DecodeHintType, Object>();
-			hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
-			hints.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
-			// hint.put(DecodeHintType., "UTF-8");
-			Result result = new MultiFormatReader().decode(binaryBitmap, hints);
-			return result.getText();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}finally {
+			CloseUtil.closeSilently(inputStream);
 		}
 		return null;
 	}
@@ -164,22 +150,18 @@ public class ZxingQRcoder implements QRcoder {
 //			System.out.println("图片中格式：  ");
 //			System.out.println("encode： " + result.getBarcodeFormat());
 //		} catch (IOException e) {
-//			e.printStackTrace();
+//			e.printStackTrace();System.out.println(ExceptionUtil.getExceptionMessage(e));
 //		} catch (NotFoundException e) {
-//			e.printStackTrace();
+//			e.printStackTrace();System.out.println(ExceptionUtil.getExceptionMessage(e));
 //		}
 //	}
 
 	public static void main(String[] args) throws WriterException, IOException {
-//		ZxingQRcoder qr = new ZxingQRcoder();
-//		System.out.println(qr.decodeTest("C:\\Users\\LMoon\\Desktop\\rrr.jpg"));
-//		qr.encode("http://my.shadowsocks8.org/", new FileOutputStream(new File("d://tt.jpg")));
+		ZxingQRcoder qr = new ZxingQRcoder();
+		qr.encode("http://my.shadowsocks8.org/", new FileOutputStream(new File("d://tt.jpg")));
 //		System.out.println(qr.decode("http://my.shadowsocks8.org/images/server03.png"));
 //		 qr.testEncode();
 		// qr.testDecode();
-		URL url = new URL("https://www.vps168.tk/zb_users/upload/2018/06/20180605130227152817494754362.jpg");
-		BufferedImage image = ImageIO.read(url.openStream());
-		ImageIO.write(image, "jpeg", new File("d://a.jpg"));
 	}
 
 }

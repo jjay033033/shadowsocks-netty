@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -17,6 +18,8 @@ import com.swetake.util.Qrcode;
 
 import jp.sourceforge.qrcode.QRCodeDecoder;
 import jp.sourceforge.qrcode.data.QRCodeImage;
+import priv.lmoon.shadowsupdate.util.CloseUtil;
+import priv.lmoon.shadowsupdate.util.UrlContent;
 
 public class SwetakeQRcoder implements QRcoder{
 	
@@ -91,15 +94,36 @@ public class SwetakeQRcoder implements QRcoder{
 	@Override
 	public String decode(String urlStr) {
 		BufferedImage bi = null;
-		QRCodeDecoder decoder = new QRCodeDecoder();  
+		QRCodeDecoder decoder = new QRCodeDecoder(); 
+		InputStream inputStream = null;					
 		try {
-			URL url = new URL(urlStr);
-			bi = ImageIO.read(url.openStream());
-			byte[] bytes = decoder.decode(new MyQRCodeImage(bi));
-			return new String(bytes);
+			inputStream = new URL(urlStr).openStream();
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("decode:", e);
+			try {
+				inputStream = UrlContent.getUrlInputStream(urlStr);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				logger.error("decode2:", e);
+			}	
+		}
+		if(inputStream==null){
+			return null;
+		}
+		try {
+			bi = ImageIO.read(inputStream);
+			if(bi==null){
+				return null;
+			}
+			byte[] bytes = decoder.decode(new MyQRCodeImage(bi));
+			return new String(bytes);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			CloseUtil.closeSilently(inputStream);
 		}
 		return null;
 	}

@@ -9,7 +9,7 @@
 	<getFrom>0</getFrom>
 
 	<servers>
-		<server>
+		<!--<server>
 			<id>vps168pic</id>
 			<url>https://www.vps168.tk/post/4.html</url>
 			<begin>扫码教程</begin>
@@ -19,7 +19,7 @@
 			<picUrlEnd>&quot;</picUrlEnd>
 			<severPicFlag></severPicFlag>
 		</server>
-		<!--<server>
+		<server>
 			<id>ishadowsocks</id>
 			<url>https://my.ishadowx.net/</url>
 			<begin>id=&quot;portfolio&quot;</begin>
@@ -49,7 +49,7 @@
 				<end>&lt;</end>
 				<no>4</no>
 			</param>
-		</server>
+		</server>-->
 		<server>
 			<id>shadowsocks8</id>
 			<url>https://get.ss8.fun/</url>
@@ -60,7 +60,7 @@
 			<picUrlEnd>&quot;</picUrlEnd>
 			<severPicFlag>server</severPicFlag>
 		</server>
-		<server>
+		<!--<server>
 			<id>vps168</id>
 			<url>https://www.vps168.tk/post/4.html</url>
 			<begin>IP地址</begin>

@@ -99,8 +99,8 @@ public class SwetakeQRcoder implements QRcoder{
 		try {
 			inputStream = new URL(urlStr).openStream();
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("decode:", e);
+//			e.printStackTrace();
+//			logger.error("decode:", e);
 			try {
 				inputStream = UrlContent.getUrlInputStream(urlStr);
 			} catch (Exception e1) {

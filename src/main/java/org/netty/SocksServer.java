@@ -19,7 +19,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.traffic.GlobalTrafficShapingHandler;
 import io.netty.handler.traffic.TrafficCounter;
-import top.lmoon.shadowsupdate.config.ConfigListFactory;
+import top.lmoon.shadowsupdate.Shadowsupdate;
 import top.lmoon.shadowsupdate.config.XmlConfig;
 import top.lmoon.shadowsupdate.config.inithandler.FileConfigLoaderInitHandler;
 
@@ -54,9 +54,8 @@ public class SocksServer {
 
 	public void start() {
 		try {
-			PacLoader.init(PAC);
-//			XmlConfig.init(CONFIG,OUT_PATH,QRCODE_PATH,JSON_FILE_PATH_NAME);						
-			XmlConfig.init(new FileConfigLoaderInitHandler(CONFIG));	
+			PacLoader.init(PAC);						
+			Shadowsupdate.getInstance().init(new FileConfigLoaderInitHandler(CONFIG));;	
 			ConfigLoader.init(OUT_PATH,QRCODE_PATH,JSON_FILE_PATH_NAME);
 			int localPort = XmlConfig.getLocalPort();			
 			

@@ -21,6 +21,7 @@ import io.netty.handler.traffic.GlobalTrafficShapingHandler;
 import io.netty.handler.traffic.TrafficCounter;
 import priv.lmoon.shadowsupdate.config.ConfigListFactory;
 import priv.lmoon.shadowsupdate.config.XmlConfig;
+import priv.lmoon.shadowsupdate.config.inithandler.FileConfigLoaderInitHandler;
 
 public class SocksServer {
 
@@ -54,7 +55,9 @@ public class SocksServer {
 	public void start() {
 		try {
 			PacLoader.init(PAC);
-			XmlConfig.init(CONFIG,OUT_PATH,QRCODE_PATH,JSON_FILE_PATH_NAME);						
+//			XmlConfig.init(CONFIG,OUT_PATH,QRCODE_PATH,JSON_FILE_PATH_NAME);						
+			XmlConfig.init(new FileConfigLoaderInitHandler(CONFIG));	
+			ConfigLoader.init(OUT_PATH,QRCODE_PATH,JSON_FILE_PATH_NAME);
 			int localPort = XmlConfig.getLocalPort();			
 			
 			bossGroup = new NioEventLoopGroup(1);

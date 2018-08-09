@@ -18,13 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sf.json.JSONObject;
-import priv.lmoon.shadowsupdate.config.ConfigList;
-import priv.lmoon.shadowsupdate.config.ConfigListFactory;
-import priv.lmoon.shadowsupdate.config.XmlConfig;
-import priv.lmoon.shadowsupdate.qrcode.QRcodeUtil;
-import priv.lmoon.shadowsupdate.util.ConfListUtil;
-import priv.lmoon.shadowsupdate.util.FileUtil;
-import priv.lmoon.shadowsupdate.vo.ConfVO;
+import top.lmoon.shadowsupdate.config.ConfigList;
+import top.lmoon.shadowsupdate.config.ConfigListFactory;
+import top.lmoon.shadowsupdate.config.XmlConfig;
+import top.lmoon.shadowsupdate.qrcode.QRcodeUtil;
+import top.lmoon.shadowsupdate.util.ConfListUtil;
+import top.lmoon.shadowsupdate.util.FileUtil;
+import top.lmoon.shadowsupdate.vo.ConfVO;
 
 public class ConfigLoader {
 

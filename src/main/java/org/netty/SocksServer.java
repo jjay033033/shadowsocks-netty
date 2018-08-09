@@ -19,9 +19,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.traffic.GlobalTrafficShapingHandler;
 import io.netty.handler.traffic.TrafficCounter;
-import priv.lmoon.shadowsupdate.config.ConfigListFactory;
-import priv.lmoon.shadowsupdate.config.XmlConfig;
-import priv.lmoon.shadowsupdate.config.inithandler.FileConfigLoaderInitHandler;
+import top.lmoon.shadowsupdate.config.ConfigListFactory;
+import top.lmoon.shadowsupdate.config.XmlConfig;
+import top.lmoon.shadowsupdate.config.inithandler.FileConfigLoaderInitHandler;
 
 public class SocksServer {
 

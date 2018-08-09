@@ -5,7 +5,7 @@ package org.netty.config.generator;
 
 import java.util.List;
 
-import priv.lmoon.shadowsupdate.vo.ConfVO;
+import top.lmoon.shadowsupdate.vo.ConfVO;
 
 /**
  * @author LMoon

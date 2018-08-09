@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 
-import priv.lmoon.shadowsupdate.vo.ConfVO;
+import top.lmoon.shadowsupdate.vo.ConfVO;
 
 /**
  * @author LMoon

@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import priv.lmoon.shadowsupdate.config.ConfigList;
-import priv.lmoon.shadowsupdate.config.ConfigListFactory;
-import priv.lmoon.shadowsupdate.vo.ConfVO;
+import top.lmoon.shadowsupdate.config.ConfigList;
+import top.lmoon.shadowsupdate.config.ConfigListFactory;
+import top.lmoon.shadowsupdate.vo.ConfVO;
 
 /**
  * @author LMoon

@@ -146,5 +146,17 @@
 			<systemPath>${project.basedir}/lib/QRCode.jar</systemPath>
 			<scope>system</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>top.lmoon</groupId>
+			<artifactId>shadowsocks-get-base</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 </project>
